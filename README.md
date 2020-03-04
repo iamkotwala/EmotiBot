@@ -10,7 +10,7 @@
 * It uses your system's webcam to capture your face
 
 ### Tools & Technology Used: ###
-* Tensorflow, NumPy, Keras, CV2
+* Tensorflow, NumPy, Keras, CV2, Tkinter
 * PyCharm
 * Anaconda
 
