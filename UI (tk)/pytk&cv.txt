@@ -1,0 +1,78 @@
+from tkinter import *
+from PIL import Image, ImageTk
+import cv2
+
+win = Tk()
+win.title('EMOTIBOT')
+win.config(background = "#D9D9D9")
+win.resizable(width=FALSE, height=FALSE)
+
+#frame1 for webcamera
+frame1 = Frame(win, width=600, bg="white",height=300, padx=10, pady=10,highlightbackground="grey", highlightcolor="black", highlightthickness=5)
+frame1.pack(side=LEFT ,fill=Y,padx=10, pady=10)
+
+
+
+cap = cv2.VideoCapture(0)
+def show_frame():
+    _, frame = cap.read()
+    frame = cv2.flip(frame, 1)
+    cv2image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGBA)
+    img = Image.fromarray(cv2image)
+    imgtk = ImageTk.PhotoImage(image=img)
+    lmain.imgtk = imgtk
+    lmain.configure(image=imgtk)
+    lmain.after(10, show_frame) 
+    
+#Capture video frames
+lmain = Label(frame1)
+lmain.grid(row=0, column=0)
+
+#Slider window (slider controls stage position)
+#sliderFrame = Frame(win, width=600, height=100)
+#sliderFrame.pack(row = 600, column=0, padx=10, pady=2)
+
+
+#l1 = Label(frame1, text="turn ON the webcam",font=("Helvetica", 12),bg="white", fg="#0E7A3F")
+#l1.pack(fill=Y,padx=150,pady=300)
+
+#frame2 for logo
+frame2 = Frame(win, bg='#D9D9D9', width=300, height=5,padx=10, pady=10,highlightbackground="grey", highlightcolor="black")
+#photo = PhotoImage(file='C:\\Users\\jayat\\OneDrive\\Desktop\\logo.png')
+#Label(frame2, image=photo,padx=10)
+frame2.pack(side = TOP,fill=X,padx=10) 
+photo = PhotoImage(file='C:\\Users\\iamvr\\Desktop\\EmotiBot\\LogosDesign\\logom.png')
+l = Label(frame2, image=photo,padx=10,pady=10)
+l.pack()
+l1 = Label(frame2, text="logs",font=("Helvetica", 16),bg="#D9D9D9", fg="#0E7A3F")
+l1.pack(side=BOTTOM,fill=Y,padx=2)
+
+#frame3 for logs
+frame3 = Frame(win, bg='black', width=300, height=150,padx=5, pady=5,highlightbackground="#707173", highlightcolor="black")
+frame3.pack(fill=X,expand=True,padx=5, pady=5)
+frame3.pack_propagate(0) #stops frame from shrinking
+
+ 
+#frame4 for buttons
+frame4 = Frame(win, bg='grey', width=300, height=60,padx=5, pady=5,highlightbackground="grey", highlightcolor="black")
+frame4.pack(side=BOTTOM, fill=BOTH,expand=1,padx=5,pady=10)
+
+#photo = PhotoImage(file ='C:\\Users\\jayat\\OneDrive\\Desktop\\btn.png') 
+  
+# Resizing image to fit on button 
+
+#photo = photo.subsample(5,5)
+#b = Button(frame4,image = photo, padx = 40)
+
+
+#Button(root, text = 'Click Me !', image = photoimage, 
+                    #compound = LEFT).pack(side = TOP) 
+b = Button(frame4, text='ON', padx = 40)
+b.pack(side=LEFT,pady = 20, padx = 20)
+c = Button(frame4, text='OFF', padx=40)
+c.pack(side=RIGHT,pady = 20, padx = 20)
+
+
+
+show_frame()  #Display 2
+win.mainloop()
