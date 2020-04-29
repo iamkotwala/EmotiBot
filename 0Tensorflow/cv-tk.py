@@ -25,8 +25,7 @@ win.resizable(width=FALSE, height=FALSE)
 
 #frame1 for webcamera
 frame1 = Frame(win, width=600, bg="black",height=300, padx=10, pady=10,highlightbackground="grey", highlightcolor="black", highlightthickness=5)
-frame1.pack(side=LEFT ,fill=Y,padx=10, pady=10)
-
+frame1.pack(side=LEFT ,fill=Y,padx=10, pady=10, expand=True)
 
 
 #frame2 for logo
@@ -134,7 +133,7 @@ if mode == "display":
             cropped_img = np.expand_dims(np.expand_dims(cv2.resize(roi_gray, (48, 48)), -1), 0)
             prediction = model.predict(cropped_img)
             maxindex = int(np.argmax(prediction))
-            cv2.putText(frame, emotion_dict[maxindex], (x+20, y-60), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2, cv2.LINE_AA)
+            cv2.putText(frame, emotion_dict[maxindex], (x+20, y-60), cv2.FONT_HERSHEY_PLAIN, 1, (255, 255, 255), 2, cv2.LINE_AA)
 
         #cv2.imshow('Video', cv2.resize(frame,(1600,960),interpolation = cv2.INTER_CUBIC))
         img = Image.fromarray(cv2.cvtColor(frame, cv2.COLOR_BGR2RGBA))
@@ -150,10 +149,10 @@ if mode == "display":
     
     show_frame()  #Display 2
     win.mainloop()
-     
-
-    #cap.release()
-    #cv2.destroyAllWindows()
+    
+    #if cv2.waitKey(1) & 0xFF == ord('q'):
+    #    cap.release() 
+    #    cv2.destroyAllWindows()
     
     
     
