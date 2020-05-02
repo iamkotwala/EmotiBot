@@ -30,7 +30,7 @@ frame1.pack(side=LEFT ,fill=Y,padx=10, pady=10, expand=True)
 #frame2 for logo
 frame2 = Frame(win, bg='#D9D9D0', width=310, height=5,padx=0, pady=0)
 frame2.pack(side = TOP,fill=X,padx=(0,10), pady=(10,0))
-photo = PhotoImage(file='C:\\Users\\iamvr\\Desktop\\EmotiBot\\LogosDesign\\logom.png')
+photo = PhotoImage(file='C:\\Users\\iamvr\\Desktop\\EmotiBot\\Logos & Images\\logom.png')
 l = Label(frame2, image=photo, padx=0,pady=0)
 l.pack()
 
@@ -38,18 +38,25 @@ l1 = Label(frame2, text="Logs",font=("Helvetica", 14, "italic"),bg="#D9D9D9", fg
 l1.pack(side=BOTTOM,fill=Y,padx=2)
 
 #frame3 for logs
-frame3 = Frame(win, bg='black', width=310, height=120,padx=0, pady=0)
+frame3 = Frame(win, bg='black', width=310, height=140,padx=0, pady=0)
 frame3.pack(fill=X,expand=True,padx=(0,10), pady=0)
 frame3.pack_propagate(0) #stops frame from shrinking
 
 #frame4 for buttons
-frame4 = Frame(win, bg='#CFD8E7', width=300, height=60,padx=0, pady=0)
+frame4 = Frame(win, bg='#D9D9D9', width=300, height=60,padx=0, pady=0)
 frame4.pack(side=BOTTOM, fill=BOTH,expand=1,padx=(0,10),pady=(0,10))
 
-b = Button(frame4, text='ON', padx = 40, command=lambda: controller.show_frame("On"))
-b.pack(side=LEFT,pady = 20, padx = 20)
-c = Button(frame4, text='OFF', padx=40, command=lambda: controller.show_frame("Off"))
-c.pack(side=RIGHT,pady = 20, padx = 20)
+#b = Button(frame4, text='ON', padx = 40, command=lambda: controller.show_frame("On"))
+
+img = PhotoImage(file="C:\\Users\\iamvr\\Desktop\\EmotiBot\\Logos & Images\\play.png") # make sure to add "/" not "\"
+photoimage = img.subsample(2, 2) 
+bon = Button(frame4, text = 'Camera ON ', image = photoimage, compound = LEFT, command=lambda: controller.show_frame("On"))
+bon.pack(side=LEFT,pady = (12,0), padx = (32,0))
+
+img2 = PhotoImage(file="C:\\Users\\iamvr\\Desktop\\EmotiBot\\Logos & Images\\stop.png") # make sure to add "/" not "\"
+photoimage2 = img2.subsample(2, 2) 
+boff = Button(frame4, text=' Camera OFF ', image = photoimage2, compound = LEFT, command=lambda: controller.show_frame("Off"))
+boff.pack(side=RIGHT,pady = (12,0), padx = (0,32))
 
 # Define data
 train_dir = 'data/train'
