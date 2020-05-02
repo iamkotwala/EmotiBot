@@ -1,6 +1,6 @@
 # EmotiBot
 <h3 align="center">
-	<img width="80" src="https://raw.githubusercontent.com/iamkotwala/EmotiBot/master/logotrans.png">
+	<img width="80" src="https://raw.githubusercontent.com/iamkotwala/EmotiBot/master/Logos%20%26%20Images/logotrans.png">
 	<br>Extraction of Facial Features for Emotion Detection using ML <br>
 </h3>
 
@@ -11,7 +11,7 @@
 
 ### Tools & Technology Used: ###
 * Tensorflow, NumPy, Keras, CV2, Tkinter
-* PyCharm
+* PyCharm/ Spyder
 * Anaconda
 
 ### Langauges ###
@@ -19,6 +19,6 @@
 
 ### Dummy GUI ###
 <h1 align="center">
-	<img width="600" src="https://raw.githubusercontent.com/iamkotwala/EmotiBot/master/GUI.png" border="5">
+	<img width="600" src="https://raw.githubusercontent.com/iamkotwala/EmotiBot/master/Logos%20%26%20Images/GUI.png" border="5">
 	<br>
 </h1>
