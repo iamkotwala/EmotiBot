@@ -38,18 +38,18 @@ l1 = Label(frame2, text="logs",font=("Helvetica", 16),bg="#D9D9D9", fg="#0E7A3F"
 l1.pack(side=BOTTOM,fill=Y,padx=2)
 
 #frame3 for logs
-frame3 = Frame(win, bg='black', width=300, height=150,padx=5, pady=5,highlightbackground="#707173", highlightcolor="black")
+frame3 = Frame(win, bg='black', width=300, height=150,padx=5, pady=5, highlightcolor="black")
 frame3.pack(fill=X,expand=True,padx=5, pady=5)
 frame3.pack_propagate(0) #stops frame from shrinking
 
  
 #frame4 for buttons
-frame4 = Frame(win, bg='grey', width=300, height=60,padx=5, pady=5,highlightbackground="grey", highlightcolor="black")
+frame4 = Frame(win, bg='#c7c7c7', width=300, height=60,padx=5, pady=5, highlightcolor="black")
 frame4.pack(side=BOTTOM, fill=BOTH,expand=1,padx=5,pady=10)
 
-b = Button(frame4, text='ON', padx = 40)
+b = Button(frame4, text='ON', padx = 40, command=lambda: controller.show_frame("On"))
 b.pack(side=LEFT,pady = 20, padx = 20)
-c = Button(frame4, text='OFF', padx=40)
+c = Button(frame4, text='OFF', padx=40, command=lambda: controller.show_frame("Off"))
 c.pack(side=RIGHT,pady = 20, padx = 20)
 
 # Define data
@@ -145,7 +145,7 @@ if mode == "display":
         
     #Capture video frames
     lmain = Label(frame1)
-    lmain.grid(row=0, column=0)
+    lmain.grid(row=0, column=0, pady=(50,0))
     
     show_frame()  #Display 2
     win.mainloop()
@@ -153,8 +153,7 @@ if mode == "display":
     #if cv2.waitKey(1) & 0xFF == ord('q'):
     #    cap.release() 
     #    cv2.destroyAllWindows()
-    
-    
+
     
     
     
