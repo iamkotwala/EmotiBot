@@ -19,33 +19,32 @@ a = ap.parse_args()
 mode = a.mode
 
 win = Tk()
-win.title('EMOTIBOT')
+win.title('EmotiBot (Made with love in Python)')
 win.config(background = "#D9D9D9")
 win.resizable(width=FALSE, height=FALSE)
 
 #frame1 for webcamera
-frame1 = Frame(win, width=600, bg="black",height=300, padx=10, pady=10,highlightbackground="grey", highlightcolor="black", highlightthickness=5)
+frame1 = Frame(win, width=600, bg="black",height=300, padx=10, pady=10, highlightcolor="black")
 frame1.pack(side=LEFT ,fill=Y,padx=10, pady=10, expand=True)
 
-
 #frame2 for logo
-frame2 = Frame(win, bg='#D9D9D9', width=300, height=5,padx=10, pady=10,highlightbackground="grey", highlightcolor="black")
-frame2.pack(side = TOP,fill=X,padx=10) 
+frame2 = Frame(win, bg='#D9D9D0', width=310, height=5,padx=0, pady=0)
+frame2.pack(side = TOP,fill=X,padx=(0,10), pady=(10,0))
 photo = PhotoImage(file='C:\\Users\\iamvr\\Desktop\\EmotiBot\\LogosDesign\\logom.png')
-l = Label(frame2, image=photo,padx=10,pady=10)
+l = Label(frame2, image=photo, padx=0,pady=0)
 l.pack()
-l1 = Label(frame2, text="logs",font=("Helvetica", 16),bg="#D9D9D9", fg="#0E7A3F")
+
+l1 = Label(frame2, text="Logs",font=("Helvetica", 14, "italic"),bg="#D9D9D9", fg="#000000")
 l1.pack(side=BOTTOM,fill=Y,padx=2)
 
 #frame3 for logs
-frame3 = Frame(win, bg='black', width=300, height=150,padx=5, pady=5, highlightcolor="black")
-frame3.pack(fill=X,expand=True,padx=5, pady=5)
+frame3 = Frame(win, bg='black', width=310, height=120,padx=0, pady=0)
+frame3.pack(fill=X,expand=True,padx=(0,10), pady=0)
 frame3.pack_propagate(0) #stops frame from shrinking
 
- 
 #frame4 for buttons
-frame4 = Frame(win, bg='#c7c7c7', width=300, height=60,padx=5, pady=5, highlightcolor="black")
-frame4.pack(side=BOTTOM, fill=BOTH,expand=1,padx=5,pady=10)
+frame4 = Frame(win, bg='#CFD8E7', width=300, height=60,padx=0, pady=0)
+frame4.pack(side=BOTTOM, fill=BOTH,expand=1,padx=(0,10),pady=(0,10))
 
 b = Button(frame4, text='ON', padx = 40, command=lambda: controller.show_frame("On"))
 b.pack(side=LEFT,pady = 20, padx = 20)
@@ -84,6 +83,7 @@ validation_generator = vali_datagen.flow_from_directory(
 model = Sequential() #stack layers model. tf.keras model
 
 model.add(Conv2D(32, kernel_size=(3, 3), activation='relu', input_shape=(48, 48, 1)))
+
 #layer one. inpput layer
 model.add(Conv2D(64, kernel_size=(3, 3), activation='relu'))
 #kernel size is to divide 48x48 imge into 3x3 actiavtion fn
@@ -94,12 +94,14 @@ model.add(Dropout(0.25))
 
 model.add(Conv2D(128, kernel_size=(3, 3), activation='relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
+
 model.add(Conv2D(128, kernel_size=(3, 3), activation='relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
 model.add(Dropout(0.25))
-
 model.add(Flatten()) #convert matrix into vector
+
 model.add(Dense(1024, activation='relu'))
+
 model.add(Dropout(0.5)) #dropout was udes to minimize overfitting.
 model.add(Dense(7, activation='softmax')) #output layer
 
@@ -145,7 +147,7 @@ if mode == "display":
         
     #Capture video frames
     lmain = Label(frame1)
-    lmain.grid(row=0, column=0, pady=(50,0))
+    lmain.grid(row=0, column=0, pady=(3,0))
     
     show_frame()  #Display 2
     win.mainloop()
@@ -153,15 +155,3 @@ if mode == "display":
     #if cv2.waitKey(1) & 0xFF == ord('q'):
     #    cap.release() 
     #    cv2.destroyAllWindows()
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
