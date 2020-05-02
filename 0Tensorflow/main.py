@@ -9,6 +9,7 @@ from tensorflow.keras.layers import Conv2D
 from tensorflow.keras.layers import MaxPooling2D
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tkinter import *
+#Frame, Tk, PhotoImage, Button, Label, PanedWindow
 from PIL import Image, ImageTk
 
 # import os
@@ -25,7 +26,7 @@ win = Tk()
 win.iconbitmap('C:\\Users\\iamvr\\Desktop\\EmotiBot\\Logos & Images\\logoico.ico')
 win.title('EmotiBot (Made with love in Python)')
 win.config(background='#D9D9D9')
-win.resizable(width=FALSE, height=FALSE)
+win.resizable(width=False, height=False)
 
 # frame1 for webcamera
 frame1 = Frame(
@@ -189,5 +190,5 @@ if mode == 'display':
     win.mainloop()
 
     # if cv2.waitKey(1) & 0xFF == ord('q'):
-    #    cap.release()
-    #    cv2.destroyAllWindows()
+#cap.release()
+#cv2.destroyAllWindows()
