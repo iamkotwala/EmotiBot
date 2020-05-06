@@ -95,7 +95,9 @@ win.iconbitmap('C:\\Users\\iamvr\\Desktop\\EmotiBot\\Logos & Images\\logoico.ico
 win.title('EmotiBot (Made with love in Python)')
 win.config(background='#D9D9D9')
 win.resizable(width=False, height=False)
-
+    
+#def on():
+    
 # frame1 for webcamera
 frame1 = Frame(
     win,
@@ -107,6 +109,11 @@ frame1 = Frame(
     highlightcolor='black')
 frame1.pack(side=LEFT, fill=Y, padx=10, pady=10, expand=True)
 
+#def off():
+#    cap.release()
+#    l1 = Label(frame1, text="turn ON the webcam",font=("Helvetica", 12),bg="white", fg="#0E7A3F")
+#    l1.pack(fill=Y,padx=150,pady=300)
+    
 # frame2 for logo
 frame2 = Frame(
     win,
@@ -150,20 +157,18 @@ frame4.pack(side=BOTTOM, fill=BOTH, expand=1, padx=(0, 10), pady=(0, 10))
 # button1
 img = PhotoImage(file='C:\\Users\\iamvr\\Desktop\\EmotiBot\\Logos & Images\\play.png')  # make sure to add "/" not "\"
 photoimage = img.subsample(2, 2)
-bon = Button(frame4, text='Camera ON ', image=photoimage,
-             compound=LEFT, command=lambda : controller.show_frame('On'))
+bon = Button(frame4, text='Camera ON ', image=photoimage, compound=LEFT, command=lambda :on())
 bon.pack(side=LEFT, pady=(12, 0), padx=(40, 0))
 
 # button2
 
 img2 = PhotoImage(file='C:\\Users\\iamvr\\Desktop\\EmotiBot\\Logos & Images\\stop.png')  # make sure to add "/" not "\"
 photoimage2 = img2.subsample(2, 2)
-boff = Button(frame4, text=' Camera OFF ', image=photoimage2,
-              compound=LEFT, command=lambda : cap.release())
+boff = Button(frame4, text=' Camera OFF ', image=photoimage2, compound=LEFT, command=lambda : off())
 boff.pack(side=RIGHT, pady=(12, 0), padx=(0, 40))
 
 #---------------------------------------------------------------------------------------
-
+emotion_list = []
 def show_frame():
         (_, frame) = cap.read()
         frame = cv2.flip(frame, 1)
@@ -183,8 +188,13 @@ def show_frame():
             #print(emotion_dict[maxindex])
             logs = Label(frame3, text = (emotion_dict[maxindex], time.ctime()), font=("Consolas", 9), bg="#000000", fg="#ffffff")
             logs.pack(pady=(0, 0))
-            insertdb(emotion_dict[maxindex], 89.9, time.ctime())
             
+            emotion_list.append(maxindex) 
+            if (((emotion_list[len(emotion_list)-2]) != maxindex) or len(emotion_list)==1):
+                counter = 0
+                insertdb(emotion_dict[maxindex], 89.9, time.ctime())
+                if counter > 10:
+                    break
         # cv2.imshow('Video', cv2.resize(frame,(1600,960),interpolation = cv2.INTER_CUBIC))
         img = Image.fromarray(cv2.cvtColor(frame, cv2.COLOR_BGR2RGBA))
         imgtk = ImageTk.PhotoImage(image=img)
