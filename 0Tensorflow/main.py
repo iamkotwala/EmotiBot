@@ -12,8 +12,29 @@ from tkinter import *
 #Frame, Tk, PhotoImage, Button, Label, PanedWindow
 from PIL import Image, ImageTk
 import time
+import mysql.connector
 # import os
 # os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+
+#---------------------------------------------------------------------------------------
+
+#Create the connection object   
+myconn = mysql.connector.connect(host = "localhost", user = "root", passwd = "", database = "EmotiBot")
+#creating the cursor object  
+cur = myconn.cursor()
+def insertdb(emotio, accu, timstmp):
+    sql = "insert into logs(Emotion, Accuracy, TimeStamp) values (%s, %s, %s)"
+    val = (emotio, accu, timstmp)
+    try:
+        #inserting the values into the table
+        cur.execute(sql,val)
+        #commit the transaction 
+        myconn.commit()
+    except:
+        myconn.rollback()
+        print("failed")
+    
+#---------------------------------------------------------------------------------------
 
 # command line argument
 ap = argparse.ArgumentParser()
@@ -162,6 +183,7 @@ def show_frame():
             #print(emotion_dict[maxindex])
             logs = Label(frame3, text = (emotion_dict[maxindex], time.ctime()), font=("Consolas", 9), bg="#000000", fg="#ffffff")
             logs.pack(pady=(0, 0))
+            insertdb(emotion_dict[maxindex], 89.9, time.ctime())
             
         # cv2.imshow('Video', cv2.resize(frame,(1600,960),interpolation = cv2.INTER_CUBIC))
         img = Image.fromarray(cv2.cvtColor(frame, cv2.COLOR_BGR2RGBA))
@@ -170,10 +192,6 @@ def show_frame():
         lmain.configure(image=imgtk)
         lmain.after(10, show_frame)
         
-canvas=Canvas(frame3)
-framescroll=Frame(canvas)
-myscrollbar=Scrollbar(frame3,orient="vertical",command=canvas.yview)
-canvas.configure(yscrollcommand=myscrollbar.set)
  
 # emotions will be displayed on your face from the webcam feed
 if mode == 'display':
