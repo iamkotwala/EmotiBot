@@ -8,13 +8,13 @@ from tensorflow.keras.layers import Dense, Dropout, Flatten
 from tensorflow.keras.layers import Conv2D
 from tensorflow.keras.layers import MaxPooling2D
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
-from tkinter import Frame, Tk, PhotoImage, Button, Label, Scrollbar, Text
-from tkinter.constants import RIGHT, LEFT, TOP, BOTTOM, X, Y, BOTH, NORMAL, END, DISABLED
+from tkinter import Frame, Tk, PhotoImage, Button, Label,Scrollbar,Listbox,END, Text, scrolledtext
+from tkinter.constants import RIGHT, LEFT, TOP, BOTTOM, X, Y, BOTH, NORMAL, DISABLED
 from PIL import Image, ImageTk
 import time
 import mysql.connector
-import os
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+# import os
+# os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 #---------------------------------------------------------------------------------------
 
@@ -91,7 +91,7 @@ model.add(Dense(7, activation='softmax'))  # output layer
 #---------------------------------------------------------------------------------------
 # main tk
 win = Tk()
-win.iconbitmap('C:\\Users\\iamvr\\Desktop\\EmotiBot\\Logos & Images\\logoico.ico')
+#win.iconbitmap('C:\\Users\\iamvr\\Desktop\\EmotiBot\\Logos & Images\\logoico.ico')
 win.title('EmotiBot (Made with love in Python)')
 win.config(background='#D9D9D9')
 win.resizable(width=False, height=False)
@@ -109,13 +109,10 @@ frame1 = Frame(
     highlightcolor='black')
 frame1.pack(side=LEFT, fill=Y, padx=10, pady=10, expand=True)
 
-def off():
-    cap.release()
-    l1 = Label(frame1, text="turn ON the webcam",font=("Helvetica", 12),bg="white", fg="#0E7A3F")
-    l1.pack(fill=Y,padx=150,pady=300)
-
-def on():
-    print("inside on")
+#def off():
+#    cap.release()
+#    l1 = Label(frame1, text="turn ON the webcam",font=("Helvetica", 12),bg="white", fg="#0E7A3F")
+#    l1.pack(fill=Y,padx=150,pady=300)
     
 # frame2 for logo
 frame2 = Frame(
@@ -143,13 +140,18 @@ frame3 = Frame(
     padx=0,
     pady=0)
 frame3.pack(fill=X, expand=True, padx=(0, 10), pady=0)
+
 frame3.pack_propagate(0)  # stops frame from shrinking
-scroll = Scrollbar(frame3)
-scroll.pack(side = RIGHT, fill = Y)
-T = Text(frame3, bg='#000000', fg='#ffffff')
-T.pack()
-scroll.config(command=T.yview)
-T.config(yscrollcommand=scroll.set)
+scrollbar = Scrollbar(frame3)
+scrollbar.pack( side = RIGHT, fill = Y )
+
+
+# mylist = Listbox(frame3, yscrollcommand = scrollbar.set )
+# for line in range(100):
+#    mylist.insert(END, "This is line number " + str(line))
+
+# mylist.pack( side = LEFT, fill = BOTH )
+# scrollbar.config( command = mylist.yview )
 
 
 # frame4 for buttons
@@ -163,18 +165,20 @@ frame4 = Frame(
 frame4.pack(side=BOTTOM, fill=BOTH, expand=1, padx=(0, 10), pady=(0, 10))
 
 # button1
-img = PhotoImage(file='C:\\Users\\iamvr\\Desktop\\EmotiBot\\Logos & Images\\play.png')  # make sure to add "/" not "\"
-photoimage = img.subsample(2, 2)
-bon = Button(frame4, text='Camera ON ', image=photoimage, compound=LEFT, command=lambda : on())
+#img = PhotoImage(file='C:\\Users\\iamvr\\Desktop\\EmotiBot\\Logos & Images\\play.png')  # make sure to add "/" not "\"
+#photoimage = img.subsample(2, 2)
+bon = Button(frame4, text='Camera ON ')
 bon.pack(side=LEFT, pady=(12, 0), padx=(40, 0))
 
 # button2
-img2 = PhotoImage(file='C:\\Users\\iamvr\\Desktop\\EmotiBot\\Logos & Images\\stop.png')  # make sure to add "/" not "\"
-photoimage2 = img2.subsample(2, 2)
-boff = Button(frame4, text=' Camera OFF ', image=photoimage2, compound=LEFT, command=lambda : off())
+
+#img2 = PhotoImage(file='C:\\Users\\iamvr\\Desktop\\EmotiBot\\Logos & Images\\stop.png')  # make sure to add "/" not "\"
+#photoimage2 = img2.subsample(2, 2)
+boff = Button(frame4, text=' Camera OFF ')
 boff.pack(side=RIGHT, pady=(12, 0), padx=(0, 40))
 
 #---------------------------------------------------------------------------------------
+
 emotion_list = []
 def show_frame():
         (_, frame) = cap.read()
@@ -184,8 +188,7 @@ def show_frame():
         cv2image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGBA)
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         faces = facecasc.detectMultiScale(cv2image, scaleFactor=1.3, minNeighbors=5)
-        
-        
+
         for (x, y, w, h) in faces:
             cv2.rectangle(frame, (x, y - 50), (x + w, y + h + 10),(255, 0, 0), 2)
             roi_gray = gray[y:y + h, x:x + w]
@@ -194,19 +197,21 @@ def show_frame():
             maxindex = int(np.argmax(prediction))
             cv2.putText(frame,emotion_dict[maxindex],(x + 20, y - 60),cv2.FONT_HERSHEY_PLAIN,1,(255, 255, 255),2,cv2.LINE_AA)
             #print(emotion_dict[maxindex])
+            
             # logs = Label(frame3, text = (emotion_dict[maxindex], time.ctime()), font=("Consolas", 9), bg="#000000", fg="#ffffff")
             # logs.pack(pady=(0, 0))
             
-            T.configure(state=NORMAL)
-            T.insert(END, (emotion_dict[maxindex] + time.ctime() +"\n"))
-            T.configure(state=DISABLED)
-            T.see("end")
-            #pty = predict_proba(self, x, batch_size=32, verbose=1)
-            #print(pty)
+            # T = Text(frame3)
+            # T.pack()
+            # T.insert(END, (emotion_dict[maxindex], time.ctime()))
             
+            logs = Text(frame3) 
+            logs.pack() 
+            logs.insert(END, (emotion_dict[maxindex],time.ctime()))
+    
             emotion_list.append(maxindex) 
-            if (((emotion_list[len(emotion_list)-2]) != maxindex) or len(emotion_list)==1):
-                insertdb(emotion_dict[maxindex], 89.9, time.ctime())
+            #if (((emotion_list[len(emotion_list)-2]) != maxindex) or len(emotion_list)==1):
+             #   insertdb(emotion_dict[maxindex], 89.9, time.ctime())
                 
         # cv2.imshow('Video', cv2.resize(frame,(1600,960),interpolation = cv2.INTER_CUBIC))
         img = Image.fromarray(cv2.cvtColor(frame, cv2.COLOR_BGR2RGBA))
@@ -217,7 +222,6 @@ def show_frame():
         
  
 # emotions will be displayed on your face from the webcam feed
-
 if mode == 'display':
     model.load_weights('model.h5')
     # prevents openCL usage and unnecessary logging messages
@@ -231,7 +235,7 @@ if mode == 'display':
         4: 'Neutral',
         5: 'Sad',
         6: 'Surprised'}
-    
+
     # start the webcam feed
     cap = cv2.VideoCapture(0)
 
