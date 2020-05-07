@@ -8,8 +8,8 @@ from tensorflow.keras.layers import Dense, Dropout, Flatten
 from tensorflow.keras.layers import Conv2D
 from tensorflow.keras.layers import MaxPooling2D
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
-from tkinter import *
-#Frame, Tk, PhotoImage, Button, Label, PanedWindow
+from tkinter import Frame, Tk, PhotoImage, Button, Label
+from tkinter.constants import RIGHT, LEFT, TOP, BOTTOM, X, Y, BOTH
 from PIL import Image, ImageTk
 import time
 import mysql.connector
@@ -157,15 +157,15 @@ frame4.pack(side=BOTTOM, fill=BOTH, expand=1, padx=(0, 10), pady=(0, 10))
 # button1
 img = PhotoImage(file='C:\\Users\\iamvr\\Desktop\\EmotiBot\\Logos & Images\\play.png')  # make sure to add "/" not "\"
 photoimage = img.subsample(2, 2)
-bon = Button(frame4, text='Camera ON ', image=photoimage, compound=LEFT, command=lambda :on())
-bon.pack(side=LEFT, pady=(12, 0), padx=(40, 0))
+#bon = Button(frame4, text='Camera ON ', image=photoimage, compound=LEFT, command=lambda : on())
+#bon.pack(side=LEFT, pady=(12, 0), padx=(40, 0))
 
 # button2
 
 img2 = PhotoImage(file='C:\\Users\\iamvr\\Desktop\\EmotiBot\\Logos & Images\\stop.png')  # make sure to add "/" not "\"
 photoimage2 = img2.subsample(2, 2)
-boff = Button(frame4, text=' Camera OFF ', image=photoimage2, compound=LEFT, command=lambda : off())
-boff.pack(side=RIGHT, pady=(12, 0), padx=(0, 40))
+#boff = Button(frame4, text=' Camera OFF ', image=photoimage2, compound=LEFT, command=lambda : off())
+#boff.pack(side=RIGHT, pady=(12, 0), padx=(0, 40))
 
 #---------------------------------------------------------------------------------------
 emotion_list = []
@@ -191,10 +191,8 @@ def show_frame():
             
             emotion_list.append(maxindex) 
             if (((emotion_list[len(emotion_list)-2]) != maxindex) or len(emotion_list)==1):
-                counter = 0
                 insertdb(emotion_dict[maxindex], 89.9, time.ctime())
-                if counter > 10:
-                    break
+                
         # cv2.imshow('Video', cv2.resize(frame,(1600,960),interpolation = cv2.INTER_CUBIC))
         img = Image.fromarray(cv2.cvtColor(frame, cv2.COLOR_BGR2RGBA))
         imgtk = ImageTk.PhotoImage(image=img)
