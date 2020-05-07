@@ -198,7 +198,7 @@ def show_frame():
             # logs.pack(pady=(0, 0))
             
             T.configure(state=NORMAL)
-            T.insert(END, (emotion_dict[maxindex] + time.ctime() +"\n"))
+            T.insert(END, (emotion_dict[maxindex] +" "+ time.ctime() +"\n"))
             T.configure(state=DISABLED)
             T.see("end")
             #pty = predict_proba(self, x, batch_size=32, verbose=1)
