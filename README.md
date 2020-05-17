@@ -1,7 +1,7 @@
 # EmotiBot
 <h3 align="center">
 	<img width="80" src="https://raw.githubusercontent.com/iamkotwala/EmotiBot/master/Logos%20%26%20Images/logotrans.png">
-	<br>Extraction of Facial Features for Emotion Detection using ML <br>
+	<br>Extraction of Facial Features for Emotion Detection using ML (for Mass-Surveillance) <br>
 </h3>
 
 ### Highlights ###
